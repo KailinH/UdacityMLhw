@@ -3,19 +3,12 @@
 """ 
     Skeleton code for k-means clustering mini-project.
 """
-
-
-
-
 import pickle
 import numpy
 import matplotlib.pyplot as plt
 import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-
-
-
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
     """ some plotting code designed to help you visualize your clusters """
@@ -48,6 +41,7 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
@@ -62,11 +56,20 @@ for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
 
+#####feature scaling######
+from sklearn import preprocessing
+import numpy as np
+min_max_scaler = preprocessing.MinMaxScaler()
+finance_features_minmax = min_max_scaler.fit_transform(finance_features)
+print (min_max_scaler.transform([200000.,1000000.]))
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
+from sklearn import cluster
+km = cluster.KMeans(n_clusters=2)
+#km.fit(finance_features)
+pred = km.fit_predict(finance_features)
 
-
-
+print (pred)
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
