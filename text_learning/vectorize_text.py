@@ -36,7 +36,6 @@ word_data = []
 ### can iterate your modifications quicker
 temp_counter = 0
 
-
 for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
@@ -48,14 +47,21 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
-
+            email_body = parseOutText(email)
             ### use str.replace() to remove any instances of the words
             ### ["sara", "shackleton", "chris", "germani"]
+            signature_words = ["sara", "shackleton", "chris", "germani","sshacklensf","cgermannsf"]
 
             ### append the text to word_data
-
+            for word in signature_words:
+                if word in email_body:
+                   email_body=email_body.replace(word,"")
+            word_data.append(email_body)
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
+            if from_person == from_sara :
+               from_data.append(0)
+            else:
+               from_data.append(1)
 
             email.close()
 
@@ -66,10 +72,17 @@ from_chris.close()
 pickle.dump( word_data, open("your_word_data.pkl", "w") )
 pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
-
-
-
-
 ### in Part 4, do TfIdf vectorization here
+sw = stopwords.words("english")
+from sklearn.feature_extraction.text import TfidfVectorizer
+#clean_wd = ' '.join([x for x in word_data if x not in sw])
+# for word in sw:
+#     if word in word_data:
+#         word_data=word_data.replace(word,"")
+vectorizer=TfidfVectorizer(stop_words = 'english')
+data=vectorizer.fit(word_data)
+data=vectorizer.transform(word_data)
 
+ab=vectorizer.get_feature_names()
+print vectorizer.get_feature_names()[34597]
 
