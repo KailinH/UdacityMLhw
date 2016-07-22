@@ -38,6 +38,20 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+clf = tree.DecisionTreeClassifier(min_samples_split=40)
+clf = clf.fit(features_train, labels_train)
+y_pred = clf.predict(features_test)
+accuracy = accuracy_score(labels_test,y_pred)
+print (len(labels_train))
+print (accuracy)
+print (clf.feature_importances_.argsort()[::-1][:5])
+print (clf.feature_importances_[21323],clf.feature_importances_[18849],clf.feature_importances_[11975],clf.feature_importances_[22546])
+print (clf.n_features_)
+print (clf.max_features_)
+print(clf.tree_)
+print (vectorizer.get_feature_names()[21323],vectorizer.get_feature_names()[18849])
 
 
 
