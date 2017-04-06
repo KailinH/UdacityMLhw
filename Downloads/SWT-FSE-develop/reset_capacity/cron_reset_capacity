@@ -1,0 +1,2 @@
+# m h dom mon dow command
+0 0 1 * * mysql -h stagdev.ceo3a2r3fyoz.us-east-1.rds.amazonaws.com --user=cripdb_app --password=Cripdb@pp20878stag -P 3306 DPCC_SWT_DEV < /opt/swt/SWT-FSE/reset_capacity/reset_capacity.sql
